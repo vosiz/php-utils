@@ -1,8 +1,6 @@
 <?php
 
-namespace Vosiz\Utils;
-
-//define('NIBBLE', 4);
+define('NIBBLE', 4);
 
 /** 
  * Mask and rotate integer 

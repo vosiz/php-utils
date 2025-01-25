@@ -6,7 +6,11 @@
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "Vosiz\\Utils\\": "src/"
+            "Vosiz\\Utils\\": "src/",
+            "files": [
+                "src/functions.php",
+                "src/exc.php"
+            ]
         }
     },
     "require": {
