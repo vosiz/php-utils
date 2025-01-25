@@ -1,2 +1,4 @@
-# php-list
-PHP dynamic version of array
+# php-utils
+PHP utilities
+- C# like classes
+- more OOP
