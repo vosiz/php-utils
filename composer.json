@@ -1,0 +1,15 @@
+{
+    "name": "vosiz/php-list",
+    "description": "A class based array extension",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Vosiz\\Utils\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.4"
+    }
+}
