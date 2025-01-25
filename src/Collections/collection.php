@@ -1,6 +1,6 @@
 <?php
 
-namespace Vosiz\Utils\Collection;
+namespace Vosiz\Utils\Collections;
 
 class Collection {
 

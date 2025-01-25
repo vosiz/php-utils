@@ -1,5 +1,8 @@
 # Change log
 ## Current version
+### 1.1.1 - Minor fixes
+- namespace collections typo
+
 ### 1.1.0 - New structure, new functions
 - refactored strcuture
 - added change log
