@@ -2,3 +2,4 @@
 PHP utilities
 - C# like classes
 - more OOP
+- useful functions

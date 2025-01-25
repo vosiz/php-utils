@@ -1,6 +1,6 @@
 <?php
 
-namespace Vosiz\Utils;
+namespace Vosiz\Utils\Collection;
 
 class Collection {
 
@@ -17,12 +17,23 @@ class Collection {
         }
     }
 
+    /**
+     * Get property-like magic
+     * @param string $key key/property
+     * @return mixed|null null when not found
+     */
+    public function __get(string $key) {
+
+        $key = str_camel($key);
+        return getifset($this->Data, $key);
+    }
+
     /** Classic toString override
      * @return string toString representation
     */
     public function __toString() {
 
-        $text = "APIkor/Collection";
+        $text = "Vosiz/Utils/Collection";
         if(!$this->IsEmpty()) {
             $text .= ": cnt=".$this->Count();
         }
@@ -48,6 +59,7 @@ class Collection {
 
         } else {
 
+            $key = str_camel($key);
             if(array_key_exists($key, $this->Data)) {
 
                 if($update_existing) {
