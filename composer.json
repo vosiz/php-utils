@@ -1,6 +1,6 @@
 {
-    "name": "vosiz/php-list",
-    "description": "A class based array extension",
+    "name": "vosiz/php-utils",
+    "description": "A PHP utilities",
     "type": "library",
     "license": "MIT",
     "minimum-stability": "stable",
