@@ -1,9 +1,12 @@
 # Change log
 ## Current version
+### 1.1.3 - Bools vs integers
+- simple conversion functions
+
+## History
 ### 1.1.2 - Global functions and exception
 - fixed simple helpers to be visible globally
 
-## History
 ### 1.1.1 - Minor fixes
 - namespace collections typo
 
