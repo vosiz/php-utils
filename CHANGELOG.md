@@ -1,9 +1,14 @@
 # Change log
 ## Current version
+### 1.1.4 - Collection aliases
+- minor refactor
+- added more aliases to simple work
+- fixed IndexOf
+
+## History
 ### 1.1.3 - Bools vs integers
 - simple conversion functions
 
-## History
 ### 1.1.2 - Global functions and exception
 - fixed simple helpers to be visible globally
 

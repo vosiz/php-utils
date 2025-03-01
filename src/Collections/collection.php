@@ -124,16 +124,6 @@ class Collection {
     }
 
     /**
-     * Contains value
-     * @param mixed $object questioned value
-     * @return bool true if present
-     */
-    public function Contains($object) {
-
-        return $this->HasValue($object);
-    }
-
-    /**
      * Has key
      * @param int|string $key questioned key
      * @return bool true if present
@@ -160,7 +150,7 @@ class Collection {
      */
     public function IndexOf($value) {
 
-        array_search($value, $this->Data);
+        return array_search($value, $this->Data);
     }
 
     /**
@@ -182,15 +172,6 @@ class Collection {
     }
 
     /**
-     * Get length of array
-     * @return int
-     */
-    public function Length() {
-
-        return $this->Count();
-    }
-
-    /**
      * Convert to array
      * @return array
      */
@@ -208,4 +189,32 @@ class Collection {
         return array_values($this->Data);
     }
 
+    /**
+     * Alias for Count
+     * @return int
+     */
+    public function Length() {
+
+        return $this->Count();
+    }
+
+    /**
+     * Alias for HasValue
+     * @param mixed $object questioned value
+     * @return bool true if present
+     */
+    public function Contains($object) {
+
+        return $this->HasValue($object);
+    }
+
+    /**
+     * Alias to IndexOf
+     * @param mixed $value questioned value
+     * @return int|string|false index
+     */
+    public function Find($value) {
+
+        return $this->IndexOf($value);
+    }
 }
