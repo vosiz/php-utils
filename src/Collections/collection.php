@@ -98,6 +98,15 @@ class Collection {
     }
 
     /**
+     * Remove member(s) from collection
+     * @param mixed $index Index/indices to be removed
+     */
+    public function Remove($index) {
+
+        unsetra($this->Data, $index);
+    }
+
+    /**
      * Converts to array
      * @return array
      */

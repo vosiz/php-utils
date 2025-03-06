@@ -1,11 +1,15 @@
 # Change log
 ## Current version
+### 1.1.5 - Removing member from array and reordering
+- collection support
+- standalone function
+
+## History
 ### 1.1.4 - Collection aliases
 - minor refactor
 - added more aliases to simple work
 - fixed IndexOf
 
-## History
 ### 1.1.3 - Bools vs integers
 - simple conversion functions
 

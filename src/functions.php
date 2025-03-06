@@ -169,3 +169,28 @@ function toarray($val) {
 
     return is_array($val) ? $val : [$val];
 }
+
+/**
+ * Unset and reorder array
+ * @param array $array Target array
+ * @param mixed $index Index or indeces in array
+ */
+function unsetra(&$array = array(), $index) {
+
+    if(is_array($index)) {
+
+        foreach($index as $i) {
+
+            unsetra($array, $i);
+        }
+
+        return;
+    }
+
+    if(key_exists($index, $array)) {
+
+        unset($array[$index]);
+    }
+
+    $array = array_values($array);
+}
