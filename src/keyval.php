@@ -35,6 +35,19 @@ class KeyValuePair {
     }
 
     /**
+     * ToString override
+     */
+    public function __toString() {
+
+        return sprintf("KeyValuePair(%s, %s): [%s, %s]", 
+            $this->KeyClass, 
+            $this->ValueClass, 
+            tostr($this->Key),
+            tostr($this->Value),
+        );
+    }
+
+    /**
      * Compares values
      * @param mixed $value Value to be compared
      */

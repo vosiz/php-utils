@@ -9,6 +9,7 @@
             "Vosiz\\Utils\\": "src/"
         },
         "files": [ 
+            "src/convert.php",
             "src/functions.php",
             "src/exc.php",
             "src/keyval.php"

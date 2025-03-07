@@ -1,11 +1,15 @@
 # Change log
 ## Current version
+### 1.2.1 - Strings formating
+- keyval to string
+- value/variable to string function
+
+## History
 ### 1.2.0 - Collection and key/val pair
 - keyvalue pair support with aliases and strict version
 - type related functions
 - collections supports strict version of keyvaluepair
 
-## History
 ### 1.1.5 - Removing member from array and reordering
 - collection support
 - standalone function
