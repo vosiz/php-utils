@@ -7,7 +7,12 @@
     "autoload": {
         "psr-4": {
             "Vosiz\\Utils\\": "src/"
-        }
+        },
+        "files": [ 
+            "src/functions.php",
+            "src/exc.php",
+            "src/keyval.php"
+        ]
     },
     "require": {
         "php": ">=7.4"
