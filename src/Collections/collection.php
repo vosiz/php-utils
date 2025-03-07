@@ -2,9 +2,14 @@
 
 namespace Vosiz\Utils\Collections;
 
+require_once(__DIR__.'/../keyval.php');
+require_once(__DIR__.'/exc.php');
+
+
 class Collection {
 
-    private $Data = [];
+    private $Temp = []; // temp data, original key/value
+    private $Kvps = []; // more modern, keyvaluepair-based
 
     /** Base constructor - optional values 
      * @param array $value values to add
@@ -25,7 +30,7 @@ class Collection {
     public function __get(string $key) {
 
         $key = str_camel($key);
-        return getifset($this->Data, $key);
+        return getifset($this->Temp, $key);
     }
 
     /** Classic toString override
@@ -45,26 +50,43 @@ class Collection {
     /** 
      * Adds value
      * @param mixed $object object to add
-     * @param int|string $key identification key
+     * @param mixed $key identification key
      * @param bool $update_existing if true updates value, throws exception on existing key if false
      * @return bool success
      * @throws CollectionException
     */
     public function Add($object, $key = NULL, bool $update_existing = false) {
 
+        // restriction check
+        if(($object instanceof \KeyValuePair) && !($object instanceof \KeyValuePairStrict)) {
+            
+            throw new CollectionException("Collection cannot be used with KeyValuePair, use KeyValuePairStrict instead");
+        }
+
+        if($object instanceof \KeyValuePairStrict) {
+
+            $key = $object->GetKey();
+            $this->Kvps[$key] = $object;
+            $object = $object->GetValue();
+        }
+
         if($key === NULL) {
 
-            $this->Data[] = $object;
+            $this->Temp[] = $object;
+            end($this->Temp);
+            $key = key($this->Temp);
+            $kvps = new \KeyValuePairStrict($key, $object);
+            $this->Kvps[$key] = $kvps;
             return true;
 
         } else {
 
             $key = str_camel($key);
-            if(array_key_exists($key, $this->Data)) {
+            if(array_key_exists($key, $this->Temp)) {
 
                 if($update_existing) {
 
-                    $this->Data[$key] = $object;
+                    $this->Temp[$key] = $object;
                     return true;
 
                 } else {
@@ -74,7 +96,7 @@ class Collection {
 
             } else {
 
-                $this->Data[$key] = $object;
+                $this->Temp[$key] = $object;
             }
         }
     }
@@ -103,24 +125,15 @@ class Collection {
      */
     public function Remove($index) {
 
-        unsetra($this->Data, $index);
-    }
-
-    /**
-     * Converts to array
-     * @return array
-     */
-    public function AsArray() {
-        
-        return $this->Data;
+        unsetra($this->Temp, $index);
     }
     
     /** 
-     * Clears data
+     * Clears Temp
     */
     public function Clear() {
 
-        $this->Data = array();
+        $this->Temp = array();
     }
 
     /**
@@ -129,7 +142,7 @@ class Collection {
      */
     public function Count() {
 
-        return count($this->Data);
+        return count($this->Temp);
     }
 
     /**
@@ -139,7 +152,7 @@ class Collection {
      */
     public function HasKey($key) {
 
-        return array_key_exists($key, $this->Data);
+        return array_key_exists($key, $this->Temp);
     }
 
     /**
@@ -149,7 +162,7 @@ class Collection {
      */
     public function HasValue($value) {
 
-        return in_array($value, $this->Data);
+        return in_array($value, $this->Temp);
     }
 
     /**
@@ -159,7 +172,7 @@ class Collection {
      */
     public function IndexOf($value) {
 
-        return array_search($value, $this->Data);
+        return array_search($value, $this->Temp);
     }
 
     /**
@@ -177,7 +190,7 @@ class Collection {
     */
     public function Keys() {
 
-        return array_keys($this->Data);
+        return array_keys($this->Temp);
     }
 
     /**
@@ -186,7 +199,16 @@ class Collection {
      */
     public function ToArray() {
 
-        return $this->Data;
+        return $this->Temp;
+    }
+
+    /**
+     * Convert to KeyValuePair array
+     * @return KeyValuePair[]
+     */
+    public function ToPairs() {
+
+        return $this->Kvps;
     }
 
     /**
@@ -195,7 +217,16 @@ class Collection {
      */
     public function Values() {
 
-        return array_values($this->Data);
+        return array_values($this->Temp);
+    }
+
+    /**
+     * Alias for ToArray
+     * @return array
+     */
+    public function AsArray() {
+        
+        return $this->Temp;
     }
 
     /**

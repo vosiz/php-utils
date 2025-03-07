@@ -97,6 +97,28 @@ function is_noe($obj) {
     return !isset($obj) || is_null($obj);
 }
 
+/**
+ * @param mixed $object Variable/value to check
+ * @param mixed ...$types (optional) type(s) to check
+ */
+function is_typeof($object, ...$types) {
+
+    if (empty($types)) {
+
+        throw new InvalidArgumentException('No types defined to check against.');
+    }
+
+    $object_type = typeof($object);
+    foreach ($types as $type) {
+        
+        if ($object_type === $type) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 /** 
  * Add value to list/array
  * @param array $list Ref array/list
@@ -168,6 +190,21 @@ function str_camel(string $str) {
 function toarray($val) {
 
     return is_array($val) ? $val : [$val];
+}
+
+/** 
+ * Gets type as string (class or type name)
+ * @param mixed $object Variable/value to check
+ * @return string
+*/
+function typeof($object) {
+
+    $type = gettype($object);
+
+    if($type === "object")
+        return get_class($object);
+
+    return $type;
 }
 
 /**
