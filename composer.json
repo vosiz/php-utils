@@ -1,6 +1,6 @@
 {
     "name": "vosiz/php-utils",
-    "description": "A PHP utilities",
+    "description": "A PHP utilities library",
     "type": "library",
     "license": "MIT",
     "minimum-stability": "stable",
@@ -12,7 +12,8 @@
             "src/convert.php",
             "src/functions.php",
             "src/exc.php",
-            "src/keyval.php"
+            "src/keyval.php",
+            "src/collections/collection.php"
         ]
     },
     "require": {

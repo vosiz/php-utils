@@ -1,10 +1,13 @@
 # Change log
 ## Current version
+### 1.3.0 - Autoload-comply
+- loading whats need to be load
+
+## History
 ### 1.2.1 - Strings formating
 - keyval to string
 - value/variable to string function
 
-## History
 ### 1.2.0 - Collection and key/val pair
 - keyvalue pair support with aliases and strict version
 - type related functions
