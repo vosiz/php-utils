@@ -1,6 +1,6 @@
 # Change log
 ## Current version
-### 1.4.0 - Functions update
+### 1.3.1 - Functions update
 - added new function to check declared classes
 
 ## History
