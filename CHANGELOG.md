@@ -1,9 +1,12 @@
 # Change log
 ## Current version
+### 1.4.0 - Functions update
+- added new function to check declared classes
+
+## History
 ### 1.3.0 - Autoload-comply
 - loading whats need to be load
 
-## History
 ### 1.2.1 - Strings formating
 - keyval to string
 - value/variable to string function
