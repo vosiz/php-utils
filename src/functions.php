@@ -25,6 +25,15 @@ function callback($inst, $method, $args = []) {
     call_user_func_array([$inst, $method], $args);
 }
 
+/**
+ * Gets defined class list
+ * @return string[]
+ */
+function classlist() { 
+    
+    return get_declared_classes();
+}
+
 /** 
  * Creates Exception by message
  * @param string $msg Exception message
