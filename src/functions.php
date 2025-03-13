@@ -2,6 +2,17 @@
 
 define('NIBBLE', 4);
 
+
+/**
+ * Ensures variable is an array
+ * @param mixed $val checked variable
+ * @param array
+ */
+function asarray(&$val) {
+
+    return is_array($val) ? $val : toarray($val);
+}
+
 /** 
  * Mask and rotate integer 
  * @param int $value Input value (preferably 32bit integer)
@@ -218,24 +229,17 @@ function typeof($object) {
 
 /**
  * Unset and reorder array
- * @param array $array Target array
- * @param mixed $index Index or indeces in array
+ * @param array $array Target array (passed by reference)
+ * @param mixed $index Index or indices to remove
  */
-function unsetra(&$array = array(), $index) {
+function unsetra(&$array, $index) {
 
-    if(is_array($index)) {
+    $indices = is_array($index) ? $index : toarray($index);
 
-        foreach($index as $i) {
-
-            unsetra($array, $i);
+    foreach ($indices as $i) {
+        if (array_key_exists($i, $array)) {
+            unset($array[$i]);
         }
-
-        return;
-    }
-
-    if(key_exists($index, $array)) {
-
-        unset($array[$index]);
     }
 
     $array = array_values($array);

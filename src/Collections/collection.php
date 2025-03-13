@@ -125,6 +125,7 @@ class Collection {
      */
     public function Remove($index) {
 
+        asarray($index);
         unsetra($this->Temp, $index);
     }
     
@@ -185,12 +186,27 @@ class Collection {
     }
 
     /** 
-     * Get keys
+     * Get keys (all or with filtration)
+     * @param array ...$filter_values every value to filtrate on (none means all keys)
      * @return mixed keys
     */
-    public function Keys() {
+    public function Keys(...$filter_values): array {
 
-        return array_keys($this->Temp);
+        if (empty($filter_values)) {
+            return array_keys($this->Temp);
+        }
+
+        $keys = [];
+
+        // fixing va as array
+        if(is_array($filter_values))
+            $filter_values = current($filter_values);
+
+        foreach ($filter_values as $value) {
+            $keys = array_merge($keys, array_keys($this->Temp, $value, true));
+        }
+
+        return array_unique($keys);
     }
 
     /**
@@ -256,5 +272,15 @@ class Collection {
     public function Find($value) {
 
         return $this->IndexOf($value);
+    }
+
+    /**
+     * Finds all indeces of values
+     * @param array $values Searched
+     * @return array
+     */
+    public function FindAll($values = array()) {
+
+        return $this->Keys($values);
     }
 }
