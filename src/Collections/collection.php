@@ -41,6 +41,11 @@ class Collection {
         $text = "Vosiz/Utils/Collection";
         if(!$this->IsEmpty()) {
             $text .= ": cnt=".$this->Count();
+            $text .= " {";
+            foreach($this->Temp as $key => $item) {
+                $text .= "<br> - [$key] => ".tostr($item);
+            }
+            $text .= " }";
         }
 
         return $text;
@@ -122,11 +127,12 @@ class Collection {
     /**
      * Remove member(s) from collection
      * @param mixed $index Index/indices to be removed
+     * @param bool $keep keeps indeces
      */
-    public function Remove($index) {
+    public function Remove($index, bool $keep = false) {
 
         asarray($index);
-        unsetra($this->Temp, $index);
+        unsetra($this->Temp, $index, $keep);
     }
     
     /** 

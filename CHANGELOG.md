@@ -1,11 +1,16 @@
 # Change log
 ## Current version
-### 1.4.0 - Collections manipulation
+### 1.3.3 - Collections 
+- fixed changelog file
+- keep indeces when removing
+- to string utils tuned
+
+## History
+### 1.3.2 - Collections manipulation
 - Fixed collections
 - adding array insurance function
 - removing and fanfing multiple
 
-## History
 ### 1.3.1 - Functions update
 - added new function to check declared classes
 

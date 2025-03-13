@@ -23,17 +23,47 @@ function b2int(bool $b) {
 /**
  * Converts anything to a string representation
  * @param mixed $var Variable/value
+ * @param bool
  * @return string
  */
-function tostr($var) {
+function tostr($var, bool $try_arrays = false) {
 
     if (is_object($var)) { // object
         
+        if($try_arrays) {
+
+            try{
+
+                $a = $var->ToArray();
+                foreach($a as $item) {
+
+                    try {
+
+                        tostr($item);
+
+                    } catch (Exception $exc) {
+                
+                        return "Cannot convert to array - ".method_exists($var, '__toString') ? $var->__toString() : typeof($var);
+                    }
+                }
+
+            } catch (Exception $exc) {
+        
+                return method_exists($var, '__toString') ? $var->__toString() : typeof($var);
+            }
+        }
+
         return method_exists($var, '__toString') ? $var->__toString() : typeof($var);
 
     } elseif (is_array($var)) { // array
 
-        return json_encode($var);
+        $cumul = '';
+        foreach($var as $key => $val) {
+
+            $cumul .= tostr(new KeyValuePair($key, $val))."<br>";
+        }
+
+        return $cumul;
 
     } elseif (is_bool($var)) { // bool
 

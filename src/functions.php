@@ -231,8 +231,9 @@ function typeof($object) {
  * Unset and reorder array
  * @param array $array Target array (passed by reference)
  * @param mixed $index Index or indices to remove
+ * @param bool $keep keep indices
  */
-function unsetra(&$array, $index) {
+function unsetra(&$array, $index, bool $keep = false) {
 
     $indices = is_array($index) ? $index : toarray($index);
 
@@ -242,5 +243,8 @@ function unsetra(&$array, $index) {
         }
     }
 
-    $array = array_values($array);
+    if(!$keep)
+        $array = array_values($array);
+    else 
+        return $array;
 }
