@@ -11,6 +11,16 @@ class Collection {
     private $Temp = []; // temp data, original key/value
     private $Kvps = []; // more modern, keyvaluepair-based
 
+    /**
+     * Converts array to collection
+     * @param array $a array
+     * @return Collection
+     */
+    public static function ToCollection(array $a = array()) {
+
+        return new Collection($a);
+    }
+
     /** Base constructor - optional values 
      * @param array $value values to add
     */
@@ -134,6 +144,18 @@ class Collection {
         asarray($index);
         unsetra($this->Temp, $index, $keep);
     }
+
+    /**
+     * Remove all except these (value-based), distincts same values with diff. keys
+     * @param array $excepts what to keep
+     * @param bool $keep keeps indeces
+     */
+    public function RemoveExcept(array $excepts = array(), bool $keep = false) {
+
+        $to_keep = self::ToCollection($this->Intersect($excepts));
+        $this->Clear();
+        $this->Merge($to_keep);
+    }
     
     /** 
      * Clears Temp
@@ -141,6 +163,26 @@ class Collection {
     public function Clear() {
 
         $this->Temp = array();
+    }
+
+    /**
+     * Intersect, value-based, distincts values with diff. keys
+     * @param array $a intersection array
+     * @return Collection
+     */
+    public function Intersect(array $a = array()) {
+
+        return array_intersect($this->ToArray(), $a);
+    }
+
+    /**
+     * Merge collection to this
+     * @param Collection $c collection to merge
+     * @param bool $rewrite when keys are same (true = rewrites with new value)
+     */
+    public function Merge(Collection $c, bool $rewrite = false) {
+
+        $this->AddRange($c->ToArray(), $rewrite);
     }
 
     /**
