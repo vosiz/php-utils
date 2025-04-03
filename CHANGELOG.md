@@ -1,12 +1,17 @@
 # Change log
 ## Current version
+### 1.3.5 - SmartObjecting
+- object properties
+- singleton
+- smart object and identifications
+
+## History
 ### 1.3.4 - Collections new functions
 - added merge
 - added static inst
 - remove-all with exceptions
 - intersect
 
-## History
 ### 1.3.3 - Collections 
 - fixed changelog file
 - keep indeces when removing

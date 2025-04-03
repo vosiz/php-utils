@@ -13,7 +13,9 @@
             "src/functions.php",
             "src/exc.php",
             "src/keyval.php",
-            "src/collections/collection.php"
+            "src/collections/collection.php",
+            "src/object.php",
+            "src/singleton.php"
         ]
     },
     "require": {

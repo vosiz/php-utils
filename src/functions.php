@@ -92,6 +92,50 @@ function getifset($obj, $key = null, $default = null) {
     return isset($obj) ? $obj : $default;
 }
 
+/**
+ * Get all properties of object
+ * @param object $obj object
+ * @return array[] string => [name, value, type]
+ */
+function getprops(object $obj) {
+    
+    if (!is_object($obj)) return [];
+
+    $props = [];
+    $reflection = new ReflectionClass($obj);
+    $properties = $reflection->getProperties();
+
+    foreach ($properties as $p) {
+
+        $p->setAccessible(true);
+
+        $type = $p->isPublic() ? 'public' :
+            ($p->isProtected() ? 'protected' : 'private');
+
+        $name = $p->getName();
+        $value = $p->getValue($obj);
+
+        $props[$name] = [
+            'name' => $name,
+            'value' => $value,
+            'type' => $type
+        ];
+    }
+
+    return $props;
+}
+
+/**
+ * Generates guid (hex general unique ID)
+ * @param int $chars count of characters (= x2)
+ * @return string GUID
+ */
+function guid(int $chars = 16) {
+
+    return bin2hex(random_bytes($chars));
+}
+
+
 /** 
  * Instantiate class by name
  * @param string $class Class name
@@ -165,6 +209,31 @@ function listadd(&$list, $value, $key = null) {
 function now($format = 'Y-m-d H:i:s') {
 
     return date($format);
+}
+
+/** 
+ * Get all properties of class 
+ * @param string $class classname
+ * @return array[string] string[name => visibility]
+*/
+function propsof(string $class) {
+
+    if (!class_exists($class)) {
+
+        throw new \Exception("Class '$class' not found.");
+    }
+
+    $reflection = new ReflectionClass($class);
+    $properties = [];
+
+    foreach ($reflection->getProperties() as $property) {
+
+        $modifiers = Reflection::getModifierNames($property->getModifiers());
+        $visibility = $modifiers[0];
+        $properties[$property->getName()] = $visibility;
+    }
+
+    return $properties;
 }
 
 /** 
