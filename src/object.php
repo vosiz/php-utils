@@ -1,5 +1,8 @@
 <?php
 
+require_once(__DIR__.'/interfaces/icomp.php');
+
+
 class Guid {
 
     private $String;
@@ -21,7 +24,7 @@ class Guid {
     }
 }
 
-abstract class SmartObject extends stdClass {
+abstract class SmartObject extends stdClass implements \Vosiz\Utils\IComparable {
 
     private $Type;  public function GetType() { return $this->Type;                 }
     private $Hash;  public function GetHash() { return $this->Hash->__toString();   }
@@ -44,12 +47,19 @@ abstract class SmartObject extends stdClass {
     }
 
     /**
-     * Check equality
-     * @param SmartObject $obj object to compare
+     * Interface implementation - Compares types
      */
-    public function Equals(SmartObject $obj) {
+    public function CompareType($object) {
 
-        return $this->GetHash() === $obj->GetHash();
+        return $this->GetType() === $object->GetType();
+    }   
+
+    /**
+     * Interface implementation - Compares object
+     */
+    public function Equals($object) {
+
+        return $this->GetHash() === $object->GetHash();
     }
 
     /**
@@ -59,4 +69,5 @@ abstract class SmartObject extends stdClass {
 
         return $this->__toString();
     }
+
 }

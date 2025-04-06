@@ -15,7 +15,9 @@
             "src/keyval.php",
             "src/collections/collection.php",
             "src/object.php",
-            "src/singleton.php"
+            "src/singleton.php",
+            "src/interfaces/icomp.php",
+            "src/compare.php"
         ]
     },
     "require": {

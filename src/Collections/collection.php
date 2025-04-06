@@ -3,10 +3,11 @@
 namespace Vosiz\Utils\Collections;
 
 require_once(__DIR__.'/../keyval.php');
+require_once(__DIR__.'/../object.php');
 require_once(__DIR__.'/exc.php');
 
 
-class Collection {
+class Collection extends \SmartObject {
 
     private $Temp = []; // temp data, original key/value
     private $Kvps = []; // more modern, keyvaluepair-based

@@ -152,38 +152,6 @@ function instclass(string $class, ...$args) {
 }
 
 /** 
- * Is null or empty
- * @param object Object to check
- * @return bool
-*/
-function is_noe($obj) {
-
-    return !isset($obj) || is_null($obj);
-}
-
-/**
- * @param mixed $object Variable/value to check
- * @param mixed ...$types (optional) type(s) to check
- */
-function is_typeof($object, ...$types) {
-
-    if (empty($types)) {
-
-        throw new InvalidArgumentException('No types defined to check against.');
-    }
-
-    $object_type = typeof($object);
-    foreach ($types as $type) {
-        
-        if ($object_type === $type) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-/** 
  * Add value to list/array
  * @param array $list Ref array/list
  * @param mixed $value Value to add

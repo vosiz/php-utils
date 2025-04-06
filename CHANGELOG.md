@@ -1,11 +1,15 @@
 # Change log
 ## Current version
+### 1.3.6 - Compare
+- comparation
+- minor refactor
+
+## History
 ### 1.3.5 - SmartObjecting
 - object properties
 - singleton
 - smart object and identifications
 
-## History
 ### 1.3.4 - Collections new functions
 - added merge
 - added static inst
