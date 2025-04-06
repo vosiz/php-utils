@@ -12,11 +12,8 @@
             "src/convert.php",
             "src/functions.php",
             "src/exc.php",
-            "src/keyval.php",
             "src/collections/collection.php",
-            "src/object.php",
             "src/singleton.php",
-            "src/interfaces/icomp.php",
             "src/compare.php"
         ]
     },

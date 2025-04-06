@@ -3,6 +3,7 @@
 ### 1.3.6 - Compare
 - comparation
 - minor refactor
+- deps refactor
 
 ## History
 ### 1.3.5 - SmartObjecting
