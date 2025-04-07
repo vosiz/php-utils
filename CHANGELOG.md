@@ -1,11 +1,15 @@
 # Change log
 ## Current version
+### 1.4.0 - Callback
+- callback refactoring and extension
+
+## History
+## Current version
 ### 1.3.6 - Compare
 - comparation
 - minor refactor
 - deps refactor
 
-## History
 ### 1.3.5 - SmartObjecting
 - object properties
 - singleton

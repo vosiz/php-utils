@@ -26,14 +26,71 @@ function bitmask($value, $mask = 0xFFFFFFFF, $rotate = 0) {
 }
 
 /** 
- * Simple callback
- * @param object $inst Instance of object
- * @param string $method Method to call
- * @param array $args Method arguments
+ * Simple callback function
+ * @param string function function name
+ * @param array ...$args VA
+ * @param false|mixed return of called function (default is false)
  */
-function callback($inst, $method, $args = []) {
+function callback(string $function, ...$args) {
+
+    if (!function_exists($function)) {
+
+        throw new \InvalidArgumentException("Function $function does not exist.");
+    }
+
+    return $function(...$args);
+}
+
+/**
+ * Class/object/instance callback
+ * @param object|string|mixed $var Classname, object, instance
+ * @param string $method method name
+ * @param array ...$args VA
+ */
+function callback_cls($var, string $method, ...$args) {
     
-    call_user_func_array([$inst, $method], $args);
+    try {
+
+        if (is_object($var)) {
+
+            if (!method_exists($var, $method)) {
+
+                throw new \Exception("Method '$method' does not exist in instance of class " . get_class($var));
+            }
+            return $var->$method(...$args);
+        }
+
+        if (is_string($var)) {
+
+            if (!class_exists($var)) {
+
+                throw new \Exception("Class '$var' does not exist.");
+            }
+
+            if (!method_exists($var, $method)) {
+
+                throw new \Exception("Method '$method' does not exist in class '$var'.");
+            }
+
+            $refMethod = new \ReflectionMethod($var, $method);
+
+            if ($refMethod->isStatic()) {
+
+                return $var::$method(...$args);
+
+            } else {
+
+                $instance = new $var();
+                return $instance->$method(...$args);
+            }
+        }
+
+        throw new \Exception("Invalid callback source.");
+
+    } catch (\Throwable $exc) {
+        
+        throw $exc;
+    }
 }
 
 /**
