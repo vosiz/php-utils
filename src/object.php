@@ -1,6 +1,7 @@
 <?php
 
 require_once(__DIR__.'/interfaces/icomp.php');
+require_once(__DIR__.'/guid.php');
 
 abstract class SmartObject extends stdClass implements \Vosiz\Utils\IComparable {
 

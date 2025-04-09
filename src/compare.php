@@ -74,7 +74,7 @@ function is_collection($object) {
  * @param object Object to check
  * @return bool
  */
-function is_noe($obj) {
+function is_noe($object) {
 
     return Is::NullOrEmpty($object);
 }
@@ -89,6 +89,26 @@ function is_smarto($object) {
     return Is::SmartObject($object);
 }
 
+/**
+ * Check if variable is PHP primitive data type (native primitive)
+ * @param mixed $var to check
+ */
+function is_prim($var) {
+
+    switch(typeof($var)) {
+
+        case 'integer':
+        case 'double':
+        case 'float':
+        case 'string':
+        case 'boolean':
+        case 'NULL':
+            return true;
+
+        default:
+            return false;
+    }
+}
 
 /**
  * @param mixed $object Variable/value to check

@@ -27,6 +27,7 @@ class Collection extends \SmartObject {
     */
     public function __construct(array $values = array()) {
 
+        parent::__construct();
         foreach($values as $k => $v) {
 
             $this->Add($v, $k);
