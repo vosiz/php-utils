@@ -1,13 +1,16 @@
 # Change log
 ## Current version
+### 1.4.6 - Exc ext
+- uniumplemented state exception
+- app exception
+
+## History
 ### 1.4.5 - Primitives
 - primitive datatype function check
 - dependency fix
 - collection vs smartobject fix
 - fixed compare
 
-## History
-## Current version
 ### 1.4.0 - Callback
 - callback refactoring and extension
 
