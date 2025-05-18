@@ -1,10 +1,16 @@
 # Change log
 ## Current version
+### 1.5.0 - Exc refactor
+- removed fatal and fatalexc
+- interface ToString
+- interface are global
+- format exception ToString()
+
+## History
 ### 1.4.6 - Exc ext
 - uniumplemented state exception
 - app exception
 
-## History
 ### 1.4.5 - Primitives
 - primitive datatype function check
 - dependency fix
