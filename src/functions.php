@@ -113,23 +113,14 @@ function exc(string $msg) {
     return $exc;
 }
 
-/** 
- * Fatal by string
- * @param string $msg Text to show
-*/
-function fatal($msg) {
+/**
+ * Creates Exceptionf (classic VARGs for formatting)
+ * @return Exceptionf
+ */
+function excf(string $fmt, ...$args) {
 
-    echo $msg.PHP_EOL;
-    exit;
-}
-
-/** 
- * Fatal by exception
- * @param Exception $exc Exception
-*/
-function fatalexc(Exception $exc) {
-
-    fatal($exc->getMessage());
+    $exc = Exceptionf::Create($fmt, ...$args);
+    return $exc;
 }
 
 /** 
