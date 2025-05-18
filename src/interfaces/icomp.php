@@ -1,7 +1,5 @@
 <?php
 
-namespace Vosiz\Utils;
-
 interface IComparable {
 
     /**
