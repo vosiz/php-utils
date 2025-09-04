@@ -286,6 +286,21 @@ function str_camel(string $str) {
 
     return str_replace(' ', '', ucwords(str_replace('_', ' ', $str)));
 }
+function camel_str(string $str) {   return str_camel($str); }
+function camel(string $str) {       return str_camel($str); }
+
+/**
+ * Format string to snake_case
+ * @param string $str String to be converted to snake_case
+ */
+function str_snake(string $str) {
+
+    $snake = preg_replace('/(?<!^)[A-Z]/', '_$0', $str);
+    $snake = str_replace(' ', '_', $snake);
+    return strtolower($snake);
+}
+function snake_str(string $str) {   return str_snake($str); }
+function snake(string $str)     {   return str_snake($str); }
 
 /**
  * Convert value to array eventually
