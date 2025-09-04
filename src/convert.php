@@ -1,14 +1,12 @@
 <?php
 
-require_once(__DIR__.'/exc.php');
-
-class ConvertException extends Exceptionf {
+class ConvertException extends Exception {
 
     public function __construct($var, string $fmt, ...$args) {
 
         $str = print_r($var, true);
         $fmt = sprintf("Convert failed for VAR: %s; ", $var).$fmt;
-        return parent::__construct($fmt, ...$args);
+        return parent::__construct(sprintf($fmt, ...$args));
     }
 }
 

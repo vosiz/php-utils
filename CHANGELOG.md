@@ -1,10 +1,13 @@
 # Change log
 ## Current version
-### 1.5.1 - Convert fixes
+### 1.5.2 - Convert fix
+- fixed exception
+
+## History
+### (deprecated) 1.5.1 - Convert fixes
 - can convert object to string array
 - can convert array to string array
 
-## History
 ### 1.5.0 - Exc refactor
 - removed fatal and fatalexc
 - interface ToString
