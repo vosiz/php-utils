@@ -1,9 +1,14 @@
 # Change log
 ## Current version
-### 1.5.2 - Convert fix
-- fixed exception
+### 1.6.0 - String formatting
+- to snake_case
+- to CamelCase
+- aliases
 
 ## History
+### 1.5.2 - Convert fix
+- fixed exception
+  
 ### (deprecated) 1.5.1 - Convert fixes
 - can convert object to string array
 - can convert array to string array
