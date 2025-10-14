@@ -1,11 +1,15 @@
 # Change log
 ## Current version
+### 1.7.0 - Collection refactor
+- basic collection as Dictionary
+- Dictionary (Collection) is now iterator
+
+## History
 ### 1.6.0 - String formatting
 - to snake_case
 - to CamelCase
 - aliases
 
-## History
 ### 1.5.2 - Convert fix
 - fixed exception
   

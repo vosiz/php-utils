@@ -7,19 +7,19 @@ require_once(__DIR__.'/../object.php');
 require_once(__DIR__.'/exc.php');
 
 
-class Collection extends \SmartObject {
+class Dictionary extends \SmartObject implements \IteratorAggregate {
 
     private $Temp = []; // temp data, original key/value
     private $Kvps = []; // more modern, keyvaluepair-based
 
     /**
-     * Converts array to collection
+     * Converts array to Dictionary
      * @param array $a array
-     * @return Collection
+     * @return Dictionary
      */
-    public static function ToCollection(array $a = array()) {
+    public static function ToDictionary(array $a = array()) {
 
-        return new Collection($a);
+        return new Dictionary($a);
     }
 
     /** Base constructor - optional values 
@@ -50,7 +50,7 @@ class Collection extends \SmartObject {
     */
     public function __toString() {
 
-        $text = "Vosiz/Utils/Collection";
+        $text = "Vosiz/Utils/Dictionary";
         if(!$this->IsEmpty()) {
             $text .= ": cnt=".$this->Count();
             $text .= " {";
@@ -63,6 +63,11 @@ class Collection extends \SmartObject {
         return $text;
     }
 
+    public function getIterator(): \Traversable
+    {
+        return new \ArrayIterator($this->Temp);
+    }
+
 
     /** 
      * Adds value
@@ -70,14 +75,14 @@ class Collection extends \SmartObject {
      * @param mixed $key identification key
      * @param bool $update_existing if true updates value, throws exception on existing key if false
      * @return bool success
-     * @throws CollectionException
+     * @throws DictionaryException
     */
     public function Add($object, $key = NULL, bool $update_existing = false) {
 
         // restriction check
         if(($object instanceof \KeyValuePair) && !($object instanceof \KeyValuePairStrict)) {
             
-            throw new CollectionException("Collection cannot be used with KeyValuePair, use KeyValuePairStrict instead");
+            throw new DictionaryException("Dictionary cannot be used with KeyValuePair, use KeyValuePairStrict instead");
         }
 
         if($object instanceof \KeyValuePairStrict) {
@@ -108,7 +113,7 @@ class Collection extends \SmartObject {
 
                 } else {
 
-                    throw new CollectionException("Key already exists");
+                    throw new DictionaryException("Key already exists");
                 }
 
             } else {
@@ -137,7 +142,7 @@ class Collection extends \SmartObject {
     }
 
     /**
-     * Remove member(s) from collection
+     * Remove member(s) from Dictionary
      * @param mixed $index Index/indices to be removed
      * @param bool $keep keeps indeces
      */
@@ -154,7 +159,7 @@ class Collection extends \SmartObject {
      */
     public function RemoveExcept(array $excepts = array(), bool $keep = false) {
 
-        $to_keep = self::ToCollection($this->Intersect($excepts));
+        $to_keep = self::ToDictionary($this->Intersect($excepts));
         $this->Clear();
         $this->Merge($to_keep);
     }
@@ -170,7 +175,7 @@ class Collection extends \SmartObject {
     /**
      * Intersect, value-based, distincts values with diff. keys
      * @param array $a intersection array
-     * @return Collection
+     * @return Dictionary
      */
     public function Intersect(array $a = array()) {
 
@@ -178,11 +183,11 @@ class Collection extends \SmartObject {
     }
 
     /**
-     * Merge collection to this
-     * @param Collection $c collection to merge
+     * Merge Dictionary to this
+     * @param Dictionary $c Dictionary to merge
      * @param bool $rewrite when keys are same (true = rewrites with new value)
      */
-    public function Merge(Collection $c, bool $rewrite = false) {
+    public function Merge(Dictionary $c, bool $rewrite = false) {
 
         $this->AddRange($c->ToArray(), $rewrite);
     }

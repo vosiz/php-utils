@@ -12,7 +12,7 @@
             "src/convert.php",
             "src/functions.php",
             "src/exc.php",
-            "src/collections/collection.php",
+            "src/collections/dic.php",
             "src/singleton.php",
             "src/compare.php"
         ]
