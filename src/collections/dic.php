@@ -65,7 +65,9 @@ class Dictionary extends \SmartObject implements \IteratorAggregate {
 
     public function getIterator(): \Traversable
     {
-        return new \ArrayIterator($this->Kvps);
+        foreach ($this->Kvps as $pair) {
+            yield $pair->getKey() => $pair->getValue();
+        }
     }
 
 
