@@ -65,7 +65,7 @@ class Dictionary extends \SmartObject implements \IteratorAggregate {
 
     public function getIterator(): \Traversable
     {
-        return new \ArrayIterator($this->Temp);
+        return new \ArrayIterator($this->Kvps);
     }
 
 
@@ -109,6 +109,8 @@ class Dictionary extends \SmartObject implements \IteratorAggregate {
                 if($update_existing) {
 
                     $this->Temp[$key] = $object;
+                    $kvps = new \KeyValuePairStrict($key, $object);
+                    $this->Kvps[$key] = $kvps;
                     return true;
 
                 } else {
@@ -119,6 +121,8 @@ class Dictionary extends \SmartObject implements \IteratorAggregate {
             } else {
 
                 $this->Temp[$key] = $object;
+                $kvps = new \KeyValuePairStrict($key, $object);
+                $this->Kvps[$key] = $kvps;
             }
         }
     }

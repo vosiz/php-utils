@@ -1,10 +1,13 @@
 # Change log
 ## Current version
+### 1.7.1 - Collection fix
+- fixed KeyValue pair
+
+## History
 ### 1.7.0 - Collection refactor
 - basic collection as Dictionary
 - Dictionary (Collection) is now iterator
 
-## History
 ### 1.6.0 - String formatting
 - to snake_case
 - to CamelCase
