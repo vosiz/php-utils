@@ -1,9 +1,14 @@
 # Change log
 ## Current version
+### 1.8.0 - Collection refactor
+- dependencies
+- Dictionary as Collection
+- Collection as base class
+
+## History
 ### 1.7.1 - Collection fix
 - fixed KeyValue pair
 
-## History
 ### 1.7.0 - Collection refactor
 - basic collection as Dictionary
 - Dictionary (Collection) is now iterator
