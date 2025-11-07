@@ -1,11 +1,16 @@
 # Change log
 ## Current version
+### 1.9.0 - Crypto - password hasher
+- password hashing
+- password verification
+- salt support
+
+## History
 ### 1.8.0 - Collection refactor
 - dependencies
 - Dictionary as Collection
 - Collection as base class
 
-## History
 ### 1.7.1 - Collection fix
 - fixed KeyValue pair
 

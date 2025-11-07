@@ -16,7 +16,8 @@
             "src/collections/collection.php",
             "src/collections/dic.php",
             "src/singleton.php",
-            "src/compare.php"
+            "src/compare.php",
+            "src/crypto/pass.php"
         ]
     },
     "require": {
