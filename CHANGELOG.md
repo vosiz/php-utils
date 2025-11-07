@@ -1,11 +1,14 @@
 # Change log
 ## Current version
+### 1.10.0 - Time formatter
+- basic creations
+
+## History
 ### 1.9.0 - Crypto - password hasher
 - password hashing
 - password verification
 - salt support
 
-## History
 ### 1.8.0 - Collection refactor
 - dependencies
 - Dictionary as Collection
