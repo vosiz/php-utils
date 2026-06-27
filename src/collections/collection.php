@@ -3,7 +3,7 @@
 namespace Vosiz\Utils\Collections;
 
 require_once(__DIR__.'/../object.php');
-require_once(__DIR__.'/exc.php');
+require_once(__DIR__.'/../exc.php');
 
 class Collection extends \SmartObject implements \IteratorAggregate {
 
