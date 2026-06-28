@@ -1,9 +1,12 @@
 # Change log
 ## Current version
-### 1.10.1 - Collection fix
-- fixed exc.php require path in collection.php
+### 1.10.1.1 - Collections case fix
+- moved Collections/exc.php to collections/exc.php (Linux case-sensitive fix)
+- added exc.php to autoload files
 
 ## History
+### 1.10.1 - Collection fix
+- fixed exc.php require path in collection.php
 ### 1.10.0 - Time formatter
 - basic creations
 ### 1.9.0 - Crypto - password hasher
