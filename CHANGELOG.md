@@ -1,5 +1,13 @@
 # Change log
 ## Current version
+### 1.11.0 - Io utilities (System.IO inspired)
+- added Vosiz\Utils\Io namespace (use Io for access)
+- Io\Path — Combine, SetPermissions, StripExt
+- Io\File — Exists, Create, Append
+- Io\Dir  — Create, GetFiles
+- Io\Inc  — Dir, Files
+
+## History
 ### 1.10.2 - Collections case fix
 - moved Collections/exc.php to collections/exc.php (Linux case-sensitive fix)
 - added exc.php to autoload files
