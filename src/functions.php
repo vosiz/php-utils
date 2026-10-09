@@ -6,18 +6,18 @@ define('NIBBLE', 4);
 /**
  * Ensures variable is an array
  * @param mixed $val checked variable
- * @param array
+ * @return array
  */
-function asarray(&$val) {
+function asarray($val) {
 
     return is_array($val) ? $val : toarray($val);
 }
 
 /** 
- * Mask and rotate integer 
+ * Mask and shift integer
  * @param int $value Input value (preferably 32bit integer)
  * @param int $mask Bitmask
- * @param int $rorate How many bits to rotate right
+ * @param int $rotate How many bits to shift right
  * @return int
 */
 function bitmask($value, $mask = 0xFFFFFFFF, $rotate = 0) {
@@ -48,49 +48,42 @@ function callback(string $function, ...$args) {
  * @param array ...$args VA
  */
 function callback_cls($var, string $method, ...$args) {
-    
-    try {
 
-        if (is_object($var)) {
+    if (is_object($var)) {
 
-            if (!method_exists($var, $method)) {
+        if (!method_exists($var, $method)) {
 
-                throw new \Exception("Method '$method' does not exist in instance of class " . get_class($var));
-            }
-            return $var->$method(...$args);
+            throw new \Exception("Method '$method' does not exist in instance of class " . get_class($var));
         }
-
-        if (is_string($var)) {
-
-            if (!class_exists($var)) {
-
-                throw new \Exception("Class '$var' does not exist.");
-            }
-
-            if (!method_exists($var, $method)) {
-
-                throw new \Exception("Method '$method' does not exist in class '$var'.");
-            }
-
-            $refMethod = new \ReflectionMethod($var, $method);
-
-            if ($refMethod->isStatic()) {
-
-                return $var::$method(...$args);
-
-            } else {
-
-                $instance = new $var();
-                return $instance->$method(...$args);
-            }
-        }
-
-        throw new \Exception("Invalid callback source.");
-
-    } catch (\Throwable $exc) {
-        
-        throw $exc;
+        return $var->$method(...$args);
     }
+
+    if (is_string($var)) {
+
+        if (!class_exists($var)) {
+
+            throw new \Exception("Class '$var' does not exist.");
+        }
+
+        if (!method_exists($var, $method)) {
+
+            throw new \Exception("Method '$method' does not exist in class '$var'.");
+        }
+
+        $ref_method = new \ReflectionMethod($var, $method);
+
+        if ($ref_method->isStatic()) {
+
+            return $var::$method(...$args);
+
+        } else {
+
+            $instance = new $var();
+            return $instance->$method(...$args);
+        }
+    }
+
+    throw new \Exception("Invalid callback source.");
 }
 
 /**
@@ -146,8 +139,6 @@ function getifset($obj, $key = null, $default = null) {
  * @return array[] string => [name, value, type]
  */
 function getprops(object $obj) {
-    
-    if (!is_object($obj)) return [];
 
     $props = [];
     $reflection = new ReflectionClass($obj);
@@ -188,6 +179,7 @@ function guid(int $chars = 16) {
  * Instantiate class by name
  * @param string $class Class name
  * @param mixed ...$args Vargs
+ * @throws Exception
 */
 function instclass(string $class, ...$args) {
 
@@ -195,8 +187,8 @@ function instclass(string $class, ...$args) {
         $inst = new $class(...$args);
         return $inst;
     }
-        
-    fatal("Class $class not defined");
+
+    throw new \Exception("Class '$class' not defined.");
 }
 
 /** 
@@ -290,12 +282,14 @@ function camel_str(string $str) {   return str_camel($str); }
 function camel(string $str) {       return str_camel($str); }
 
 /**
- * Format string to snake_case
+ * Format string to snake_case, acronyms stay one word (UserID -> user_id)
+ * Not an inverse of str_camel for acronyms (user_id -> UserId)
  * @param string $str String to be converted to snake_case
+ * @return string
  */
 function str_snake(string $str) {
 
-    $snake = preg_replace('/(?<!^)[A-Z]/', '_$0', $str);
+    $snake = preg_replace('/(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])/', '_', $str);
     $snake = str_replace(' ', '_', $snake);
     return strtolower($snake);
 }
@@ -328,7 +322,7 @@ function typeof($object) {
 }
 
 /**
- * Unset and reorder array
+ * Unset and reorder array (numeric keys are renumbered, string keys stay)
  * @param array $array Target array (passed by reference)
  * @param mixed $index Index or indices to remove
  * @param bool $keep keep indices
@@ -344,7 +338,7 @@ function unsetra(&$array, $index, bool $keep = false) {
     }
 
     if(!$keep)
-        $array = array_values($array);
+        $array = array_merge($array);
     else 
         return $array;
 }

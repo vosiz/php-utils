@@ -16,21 +16,13 @@ class File {
     }
 
     /**
-     * Creates an empty file
+     * Creates an empty file, existing file is truncated
      * @param string $path
      * @return bool
-     * @throws \Exception
      */
     public static function Create(string $path) {
 
-        try {
-
-            return file_put_contents($path, '') !== false;
-
-        } catch(\Exception $exc) {
-
-            throw new \Exception("Cannot create file '$path': " . $exc->getMessage());
-        }
+        return file_put_contents($path, '') !== false;
     }
 
     /**

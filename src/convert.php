@@ -5,8 +5,8 @@ class ConvertException extends Exception {
     public function __construct($var, string $fmt, ...$args) {
 
         $str = print_r($var, true);
-        $fmt = sprintf("Convert failed for VAR: %s; ", $var).$fmt;
-        return parent::__construct(sprintf($fmt, ...$args));
+        $msg = empty($args) ? $fmt : sprintf($fmt, ...$args);
+        parent::__construct("Convert failed for VAR: $str; $msg");
     }
 }
 
@@ -18,7 +18,7 @@ class ConvertException extends Exception {
  */
 function int2b(int $i) {
 
-    return $i > 0;
+    return $i != 0;
 }
 
 /**
@@ -56,15 +56,15 @@ function tostr($var, bool $to_array = false) {
     
                             $str_a[] = tostr($item);
     
-                        } catch (Exception $exc) {
+                        } catch (\Throwable $exc) {
                     
-                            return "Cannot convert object-item to string - ".method_exists($var, '__toString') ? $var->__toString() : typeof($var);
+                            return "Cannot convert object-item to string - ".(method_exists($var, '__toString') ? $var->__toString() : typeof($var));
                         }
                     }
     
                     return $str_a;
     
-                } catch (Exception $exc) {
+                } catch (\Throwable $exc) {
             
                     return method_exists($var, '__toString') ? $var->__toString() : typeof($var);
                 }
@@ -109,9 +109,9 @@ function tostr($var, bool $to_array = false) {
         // other, scalar types
         return (string)$var;
 
-    } catch(\Exception $exc) {
+    } catch(\Throwable $exc) {
 
-        throw new ConvertException($exc->getMessage());
+        throw new ConvertException($var, $exc->getMessage());
     }
     
 }

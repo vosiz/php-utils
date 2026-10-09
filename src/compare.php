@@ -25,17 +25,21 @@ class Is {
     }
 
     /**
-     * Is NULL or empty()
+     * Is NULL, empty string, empty array or empty Collection
+     * 0, '0' and false are values, not empty (unlike empty())
      * @param mixed $object object to check
      * @return bool
      */
     public static function NullOrEmpty($object) {
 
-        return !isset($object) || is_null($object);
+        if($object === null || $object === '' || $object === [])
+            return true;
+
+        return $object instanceof Collection && $object->IsEmpty();
     }
 
     /**
-     * Is one of types
+     * Is one of types (object matches also its parent classes and interfaces)
      * @param mixed $object object to check
      * @return bool
      */
@@ -49,7 +53,7 @@ class Is {
         $object_type = typeof($object);
         foreach ($types as $type) {
             
-            if ($object_type === $type) {
+            if ($object_type === $type || $object instanceof $type) {
                 return true;
             }
         }

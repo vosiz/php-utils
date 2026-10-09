@@ -20,7 +20,7 @@ class Exceptionf extends Exception implements IToString {
         return new Exceptionf($fmt, ...$args);
     }
 
-    public static function CreateInner(Exceptionf $inner, $fmt, ...$args) {
+    public static function CreateInner(\Throwable $inner, $fmt, ...$args) {
 
         $exc = self::Create($fmt, ...$args);
         $exc->SetInner($inner);
@@ -29,40 +29,52 @@ class Exceptionf extends Exception implements IToString {
 
     public static function AsString($object) : string{
 
-        return Is::TypeOf($object, 'Exceptionf') ? $object->ToString() : $object->__toString();
+        return $object instanceof Exceptionf ? $object->ToString() : $object->__toString();
     }
 
     public function __construct(string $fmt, ...$args) {
 
         // $this->Setup();
-        $msg = sprintf($fmt, ...$args);
-        return parent::__construct($msg);
+        $msg = empty($args) ? $fmt : sprintf($fmt, ...$args);
+        parent::__construct($msg);
     }
 
     public function ToString($fmt = null) : string {
 
-        if($this->IsChild) {
-
-            return $this->getMessage().' ';
-
-        } else {
-
-            $str = '[EXCf]: '.$this->getMessage();
-            if($this->Inner !== null)
-                $str .= PHP_EOL.'- '.$this->Inner->ToString();
-            return $str;
-        }
+        $str = $this->IsChild ? $this->getMessage() : '[EXCf]: '.$this->getMessage();
+        return $str.$this->InnerToString(0);
     }
 
-    public function SetInner(Exceptionf $exc) {  
-    
+    public function SetInner(\Throwable $exc) {
+
         $this->Inner = $exc;
-        $exc->IsChild = true;
+        if($exc instanceof Exceptionf)
+            $exc->IsChild = true;
     }
 
     public function SetInnerExc(string $fmt, ...$args) {
 
         return $this->SetInner(excf($fmt, ...$args));
+    }
+
+
+    /**
+     * Inner chain as indented lines, one per level
+     * @param int $depth level of indentation
+     * @return string
+     */
+    protected function InnerToString(int $depth) {
+
+        if($this->Inner === null)
+            return '';
+
+        $inner = $this->Inner;
+        $line  = PHP_EOL.str_repeat('  ', $depth).'- ';
+
+        if($inner instanceof Exceptionf)
+            return $line.$inner->getMessage().$inner->InnerToString($depth + 1);
+
+        return $line.get_class($inner).': '.$inner->getMessage();
     }
 
 }
@@ -75,7 +87,7 @@ class ApplicationException extends Exception {
 
     public function __construct(string $msg) {
 
-        return parent::__construct($msg);
+        parent::__construct($msg);
     }
 }
 class_alias('ApplicationException', 'AppException');
@@ -88,7 +100,7 @@ class UnimplementedStateException extends Exceptionf {
 
     public function __construct(string $state) {
 
-        return parent::__construct("Unimplemented state $state");
+        parent::__construct("Unimplemented state $state");
     }
 }
 
