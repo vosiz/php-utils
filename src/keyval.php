@@ -7,7 +7,7 @@ class KeyValuePairException extends Exception {
      */
     public function __construct($msg) {
 
-        return parent::__construct($msg);
+        parent::__construct($msg);
     }
 }
 
@@ -70,12 +70,12 @@ class KeyValuePairStrict extends KeyValuePair {
      */
     public function __construct($key, $value) {
 
-        if(!is_numeric($key) && !is_string($key)) {
+        if(!is_int($key) && !is_string($key)) {
 
             throw new KeyValuePairException("Key is not valid array-based key (not string nor int)");
         }
 
-        return parent::__construct($key, $value);
+        parent::__construct($key, $value);
     }
 }
 

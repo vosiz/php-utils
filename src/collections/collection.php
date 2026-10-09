@@ -5,7 +5,7 @@ namespace Vosiz\Utils\Collections;
 require_once(__DIR__.'/../object.php');
 require_once(__DIR__.'/../exc.php');
 
-class Collection extends \SmartObject implements \IteratorAggregate {
+class Collection extends \SmartObject implements \IteratorAggregate, \Countable {
 
     protected $ToStringName = "Vosiz/Utils/Collection";
     protected $Temp = []; // temp data, original key/value
@@ -69,15 +69,25 @@ class Collection extends \SmartObject implements \IteratorAggregate {
      */
     public function __get(string $key) {
 
-        $key = str_camel($key);
+        $key = $this->NormalizeKey($key);
         return getifset($this->Temp, $key);
+    }
+
+    /**
+     * Isset property-like magic
+     * @param string $key key/property
+     * @return bool
+     */
+    public function __isset(string $key) {
+
+        return isset($this->Temp[$this->NormalizeKey($key)]);
     }
 
 
     /** 
      * Adds value
      * @param mixed $object object to add
-     * @param mixed $key identification key
+     * @param mixed $key identification key (stored CamelCased, my_key and MyKey are the same key)
      * @param bool $update_existing if true updates value, throws exception on existing key if false
      * @return bool success
      * @throws CollectionException
@@ -93,7 +103,7 @@ class Collection extends \SmartObject implements \IteratorAggregate {
 
         } else {
 
-            $key = str_camel($key);
+            $key = $this->NormalizeKey($key);
             if(array_key_exists($key, $this->Temp)) {
 
                 if($update_existing) {
@@ -109,6 +119,7 @@ class Collection extends \SmartObject implements \IteratorAggregate {
             } else {
 
                 $this->Temp[$key] = $object;
+                return true;
             }
         }
     }
@@ -138,7 +149,7 @@ class Collection extends \SmartObject implements \IteratorAggregate {
      */
     public function Remove($index, bool $keep = false) {
 
-        asarray($index);
+        $index = array_map([$this, 'NormalizeKey'], asarray($index));
         unsetra($this->Temp, $index, $keep);
     }
 
@@ -186,7 +197,7 @@ class Collection extends \SmartObject implements \IteratorAggregate {
      * Count of members
      * @return int
      */
-    public function Count() {
+    public function Count(): int {
 
         return count($this->Temp);
     }
@@ -198,27 +209,27 @@ class Collection extends \SmartObject implements \IteratorAggregate {
      */
     public function HasKey($key) {
 
-        return array_key_exists($key, $this->Temp);
+        return array_key_exists($this->NormalizeKey($key), $this->Temp);
     }
 
     /**
-     * Has value
+     * Has value (strict comparison)
      * @param mixed $object questioned value
      * @return bool true if present
      */
     public function HasValue($value) {
 
-        return in_array($value, $this->Temp);
+        return in_array($value, $this->Temp, true);
     }
 
     /**
-     * Gets index/key by value
+     * Gets index/key by value (strict comparison)
      * @param mixed $value questioned value
      * @return int|string|false index or fail
      */
     public function IndexOf($value) {
 
-        return array_search($value, $this->Temp);
+        return array_search($value, $this->Temp, true);
     }
 
     /**
@@ -243,9 +254,9 @@ class Collection extends \SmartObject implements \IteratorAggregate {
 
         $keys = [];
 
-        // fixing va as array
-        if(is_array($filter_values))
-            $filter_values = current($filter_values);
+        // single array argument is the list itself
+        if(count($filter_values) === 1 && is_array($filter_values[0]))
+            $filter_values = $filter_values[0];
 
         foreach ($filter_values as $value) {
             $keys = array_merge($keys, array_keys($this->Temp, $value, true));
@@ -318,5 +329,16 @@ class Collection extends \SmartObject implements \IteratorAggregate {
     public function FindAll($values = array()) {
 
         return $this->Keys($values);
+    }
+
+
+    /**
+     * Key form used for storing and every lookup
+     * @param int|string $key
+     * @return string
+     */
+    protected function NormalizeKey($key) {
+
+        return str_camel($key);
     }
 } 
