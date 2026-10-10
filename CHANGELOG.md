@@ -1,5 +1,19 @@
 # Change log
 ## Current version
+### 1.12.0 - Big beautiful fix
+- Io\Path — Combine keeps leading slash, StripExt fixes, SetPermissions others bits
+- Io\Dir — GetFiles sorted (flat and recursive alike), Create fix
+- Exceptionf — % in message, whole inner chain, any Throwable as inner
+- is_noe — empty string and empty array are empty, 0 and false are not
+- Is::TypeOf — matches parent classes and interfaces
+- Collection — consistent keys, Remove keeps string keys, strict value lookup, isset, Countable
+- Dictionary — Add and Remove fixes, DictionaryException
+- Singleton — instance per subclass
+- PasswordHasher — password_hash, salt works as pepper (old hashes do not verify)
+- small fixes — tostr, instclass, int2b, str_snake, asarray, TimeFormat, KeyValuePairStrict
+- tests — PHPUnit, tests.sh
+
+## History
 ### 1.11.0 - Io utilities (System.IO inspired)
 - added Vosiz\Utils\Io namespace (use Io for access)
 - Io\Path — Combine, SetPermissions, StripExt
@@ -7,7 +21,6 @@
 - Io\Dir  — Create, GetFiles
 - Io\Inc  — Dir, Files
 
-## History
 ### 1.10.2 - Collections case fix
 - moved Collections/exc.php to collections/exc.php (Linux case-sensitive fix)
 - added exc.php to autoload files
