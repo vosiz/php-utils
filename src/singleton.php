@@ -2,7 +2,8 @@
 
 class Singleton extends SmartObject {
 
-    static protected $Instance = NULL;
+    static protected $Instance = NULL; // unused, kept for subclasses that still read it
+    static protected $Instances = [];
 
     /**
      * Construct
@@ -19,12 +20,12 @@ class Singleton extends SmartObject {
      */
     public static function GetInstance() {  
 
-        if (self::$Instance === NULL) {
+        $class_name = get_called_class();
+        if (!isset(self::$Instances[$class_name])) {
 
-            $class_name = get_called_class();
-            self::$Instance = new $class_name;
+            self::$Instances[$class_name] = new $class_name;
         }
 
-        return self::$Instance;
+        return self::$Instances[$class_name];
     }
 }

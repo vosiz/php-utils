@@ -14,5 +14,5 @@ interface IToString {
      * @param string $fmt (optional) output format
      * @return string
      */
-    public function ToString(string $fmt = null) : string;
+    public function ToString(?string $fmt = null) : string;
 }

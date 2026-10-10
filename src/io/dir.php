@@ -10,25 +10,18 @@ class Dir {
      * @param int $mode
      * @param bool $recursive
      * @return bool
-     * @throws \Exception
      */
     public static function Create(string $path, int $mode = Path::MODE_DEFAULT, bool $recursive = true) {
 
         if(is_dir($path))
             return true;
 
-        try {
-
-            return mkdir($path, $mode, $recursive);
-
-        } catch(\Exception $exc) {
-
-            throw new \Exception("Cannot create directory '$path': " . $exc->getMessage());
-        }
+        // failed mkdir can still mean someone else created it meanwhile
+        return mkdir($path, $mode, $recursive) || is_dir($path);
     }
 
     /**
-     * Returns list of files in directory
+     * Returns sorted list of files in directory, dotfiles are skipped
      * @param string $path
      * @param bool $recursive Include subdirectories
      * @param bool $with_ext Include extension in returned paths
@@ -42,23 +35,20 @@ class Dir {
         if(!is_dir($path))
             return $results;
 
-        if($recursive) {
+        foreach(scandir($path) as $name) {
 
-            $iterator = new \RecursiveIteratorIterator(
-                new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS)
-            );
-            foreach($iterator as $file) {
+            if($name[0] === '.')
+                continue;
 
-                if($file->isFile())
-                    $results[] = $with_ext ? $file->getRealPath() : Path::StripExt($file->getRealPath());
-            }
+            $entry = $path . '/' . $name;
 
-        } else {
+            if(is_file($entry)) {
 
-            foreach(glob($path . '/*') as $entry) {
+                $results[] = $with_ext ? $entry : Path::StripExt($entry);
 
-                if(is_file($entry))
-                    $results[] = $with_ext ? $entry : Path::StripExt($entry);
+            } elseif($recursive && is_dir($entry)) {
+
+                $results = array_merge($results, self::GetFiles($entry, true, $with_ext));
             }
         }
 

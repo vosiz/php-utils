@@ -8,6 +8,7 @@ class PasswordHasher {
 
     /**
      * Constructor
+     * @param string $salt Pepper, mixed into every password before hashing
      */
     public function __construct(string $salt) {
 
@@ -18,11 +19,11 @@ class PasswordHasher {
     /**
      * Hash password
      * @param string $password Password string
-     * @return string 64 chars
+     * @return string password_hash() output, length depends on algorithm (store as 255 chars)
      */
     public function Hash(string $password) {
 
-        return hash('sha256', $this->Salt.$password);
+        return password_hash($this->Pepper($password), PASSWORD_DEFAULT);
     }
 
     /**
@@ -33,7 +34,17 @@ class PasswordHasher {
      */
     public function Verify(string $password, string $hashed) {
 
-        $hash = $this->hash($password);
-        return hash_equals($hash, $hashed);
+        return password_verify($this->Pepper($password), $hashed);
+    }
+
+
+    /**
+     * Mixes pepper into password
+     * @param string $password Password string
+     * @return string 64 chars
+     */
+    private function Pepper(string $password) {
+
+        return hash_hmac('sha256', $password, $this->Salt);
     }
 }

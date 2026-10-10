@@ -10,7 +10,7 @@ class TimeFormat {
     /**
      * Creates timestamp string
      * @param string $format Date format
-     * @param int $micro Microtime digits (limit = 6, dont use = 0)
+     * @param int $micro Microtime digits (limit = 6, dont use = 0), appended only after seconds
      * @return string Formatted timestamp
      */
     public static function Create(string $format = "Y-m-d H:i:s", int $micro = self::MAX_MICRO_DIGITS): string
@@ -24,7 +24,7 @@ class TimeFormat {
         $fraction = (int)(($microtime - $seconds) * pow(10, $micro));
         $datetime = date($format, (int)$seconds);
 
-        if ($micro > 0) {
+        if ($micro > 0 && substr($format, -1) === 's') {
             $micro_fmt = "%0{$micro}d";
             $micro_part = '.' . sprintf($micro_fmt, $fraction);
             $datetime .= $micro_part;

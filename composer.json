@@ -3,6 +3,7 @@
     "description": "A PHP utilities library",
     "type": "library",
     "license": "MIT",
+    "keywords": ["utils", "utilities", "helpers", "collection", "dictionary", "exceptions", "io", "path", "csharp-style"],
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
@@ -11,6 +12,10 @@
         "files": [ 
             "src/convert.php",
             "src/functions.php",
+            "src/interfaces/icomp.php",
+            "src/interfaces/itostring.php",
+            "src/guid.php",
+            "src/keyval.php",
             "src/exc.php",
             "src/object.php",
             "src/collections/exc.php",
@@ -28,5 +33,13 @@
     },
     "require": {
         "php": ">=7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
+    },
+    "config": {
+        "platform": {
+            "php": "7.4.33"
+        }
     }
 }

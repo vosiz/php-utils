@@ -50,7 +50,6 @@ class Dictionary extends Collection {
         if($object instanceof \KeyValuePairStrict) {
 
             $key = $object->GetKey();
-            $this->Kvps[$key] = $object;
             $object = $object->GetValue();
         }
 
@@ -65,7 +64,7 @@ class Dictionary extends Collection {
 
         } else {
 
-            $key = str_camel($key);
+            $key = $this->NormalizeKey($key);
             if(array_key_exists($key, $this->Temp)) {
 
                 if($update_existing) {
@@ -85,6 +84,7 @@ class Dictionary extends Collection {
                 $this->Temp[$key] = $object;
                 $kvps = new \KeyValuePairStrict($key, $object);
                 $this->Kvps[$key] = $kvps;
+                return true;
             }
         }
     }
@@ -98,7 +98,11 @@ class Dictionary extends Collection {
     public function Remove($index, bool $keep = false) {
 
         parent::Remove($index, $keep);
-        unsetra($this->Kvps, $index, $keep);
+
+        // pairs carry their key, so they follow the renumbered values
+        $this->Kvps = [];
+        foreach($this->Temp as $key => $value)
+            $this->Kvps[$key] = new \KeyValuePairStrict($key, $value);
     }
 
     /**

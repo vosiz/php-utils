@@ -11,6 +11,10 @@ class CollectionException extends \Exception {
 
     public function __construct(string $msg) {
 
-        return parent::__construct($msg);
+        parent::__construct($msg);
     }
+}
+
+class DictionaryException extends CollectionException {
+
 }
